@@ -1,22 +1,24 @@
 const Random = require('./Random.js');
 
-const moduleName = function(){
-  let id = "m" + random().digit(8);
-  let workers = random().continuousRange(4,20);
-  let baseSalary = random().continuousRange(4,9)*10000;
+const Manager = function(){
+  let id = "m-" + Random().digit(8);
+  let workers = random().discreteRangeIn(4,20);
+  let baseSalary = random().discreteRangeIn(4,9)*10000;
 
   function pay(){
-    let y;
+    let y = baseSalary;
     if(workers <= 10){
-      [workers*250];
+      y += workers*250;
     }
     else if(workers > 10){
-      [2500+(workers-10)*400]
+      y += 2500 + (workers-10)*400;
     }
-    let w;
-    let d;
+    let w = y/52;
+    let d = w/7;
     return [d,w,y];
   }
+
+  return{id, workers, baseSalary, pay}
 };
 
-module.exports = moduleName;
+module.exports = Manager;
